@@ -1,48 +1,57 @@
-# pomelo-weixin-client
+# pomelo-baidu-client
 
-pomelo客户端的微信小程序实现
+pomelo 客户端的百度小程序实现
 
 ## 安装
 
 ```
-npm install pomelo-weixin-client
+npm install pomelo-baidu-client
 ```
 
-或者使用单文件版，移步[releases](https://github.com/wangsijie/pomelo-weixin-client/releases)
+或者使用单文件版，移步[releases](https://github.com/wangsijie/pomelo-baidu-client/releases)
 
-单文件版无需使用npm，支持AMD/CMD等打包方式，可以直接require
+单文件版无需使用 npm，支持 AMD/CMD 等打包方式，可以直接 require
 
 ## 使用
 
 ```js
-const pomelo = require('pomelo-weixin-client');
+const pomelo = require("pomelo-baidu-client");
 
 // 普通模式，用于生产环境，会生成wss://example.com/ws/3005类似的地址，需要nginx支持
-pomelo.init({
+pomelo.init(
+  {
     host: host,
     port: port
-}, function() {
-    console.log('success');
-});
+  },
+  function() {
+    console.log("success");
+  }
+);
 
 // 调试模式，用于本地开发，生成普通链接ws://example.com:3005
-pomelo.init({
+pomelo.init(
+  {
     host: host,
     port: port,
     debugMode: true
-}, function() {
-    console.log('success');
-});
+  },
+  function() {
+    console.log("success");
+  }
+);
 
 // 浏览器调试模式，用于本地开发，使用浏览器原生WebSocket，生成普通链接ws://example.com:3005
-pomelo.init({
+pomelo.init(
+  {
     host: host,
     port: port,
     debugMode: true,
     browserWS: true
-}, function() {
-    console.log('success');
-});
+  },
+  function() {
+    console.log("success");
+  }
+);
 
 // 如果需要多个连接实例，可以用newInstance方法生成
 const pomelo2 = pomelo.newInstance();
@@ -52,32 +61,32 @@ const pomelo2 = pomelo.newInstance();
 
 额外增加的功能：
 
-全局监听消息（排除已用request设置回调的消息）
+全局监听消息（排除已用 request 设置回调的消息）
 
 ```js
-pomelo.on('onMessage', data => {
-    console.log('onMessage', data)
+pomelo.on("onMessage", data => {
+  console.log("onMessage", data);
 });
 ```
 
 ## 特别说明
 
-微信仅支持wss连接（https）并且不支持自定义端口号，因此在服务器端进行额外的处理
+百度仅支持 wss 连接（https）并且不支持自定义端口号，因此在服务器端进行额外的处理
 
 例如以下代码：
 
 ```js
 pomelo.init({
-    host: 'example.com',
-    port: 3005
+  host: "example.com",
+  port: 3005
 });
 ```
 
-实际上连接的是```wss://example.com/ws/3005/```
+实际上连接的是`wss://example.com/ws/3005/`
 
-需要在服务器端将以上连接转换为```ws://example.com:3005```
+需要在服务器端将以上连接转换为`ws://example.com:3005`
 
-这里提供nginx的例子：
+这里提供 nginx 的例子：
 
 ```nginx
 server
